@@ -1,31 +1,44 @@
 package bridge.view;
 
-/**
- * 사용자에게 게임 진행 상황과 결과를 출력하는 역할을 한다.
- */
+import bridge.dto.UserBridgeStatus;
+
 public class OutputView {
+    private static final String NEW_LINE = System.lineSeparator();
 
     public void printWelcomeMessage() {
         System.out.println("다리 건너기 게임을 시작합니다.");
+        System.out.println();
     }
 
     public void printErrorMessage(final String message) {
         System.out.println(message);
     }
 
-    /**
-     * 현재까지 이동한 다리의 상태를 정해진 형식에 맞춰 출력한다.
-     * <p>
-     * 출력을 위해 필요한 메서드의 인자(parameter)는 자유롭게 추가하거나 변경할 수 있다.
-     */
-    public void printMap() {
+    public void printMap(final UserBridgeStatus userBridgeStatus) {
+        printUpperMap(userBridgeStatus);
+        printLowerMap(userBridgeStatus);
     }
 
-    /**
-     * 게임의 최종 결과를 정해진 형식에 맞춰 출력한다.
-     * <p>
-     * 출력을 위해 필요한 메서드의 인자(parameter)는 자유롭게 추가하거나 변경할 수 있다.
-     */
-    public void printResult() {
+    private void printUpperMap(final UserBridgeStatus userBridgeStatus) {
+        System.out.print("[ ");
+        String upperResult = String.join(" | ", userBridgeStatus.upper());
+        System.out.print(upperResult);
+        System.out.print(" ]" + NEW_LINE);
+    }
+
+    private void printLowerMap(final UserBridgeStatus userBridgeStatus) {
+        System.out.print("[ ");
+        String lowerResult = String.join(" | ", userBridgeStatus.lower());
+        System.out.print(lowerResult);
+        System.out.print(" ]");
+    }
+
+    public void printResult(final int tryCount, final boolean isSuccess) {
+        if (isSuccess) {
+            System.out.println("게임 성공 여부: 성공");
+        } else {
+            System.out.println("게임 성공 여부: 실패");
+        }
+        System.out.printf("총 시도한 횟수: %d", tryCount);
     }
 }

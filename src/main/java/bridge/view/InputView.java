@@ -12,8 +12,10 @@ public class InputView {
 
     private static final int MIN_SIZE = 3;
     private static final int MAX_SIZE = 20;
+    private static final String NEW_LINE = System.lineSeparator();
 
     public int readBridgeSize() {
+        System.out.println("다리의 길이를 입력해주세요.");
         String input = Console.readLine();
         int size = convertToInt(input);
         validateSize(size);
@@ -21,11 +23,13 @@ public class InputView {
     }
 
     public UserCommand readMoving() {
+        System.out.println(NEW_LINE + "이동할 칸을 선택해주세요. (위: U, 아래: D)" );
         String input = Console.readLine();
         return UserCommand.getCommand(input);
     }
 
     public RetryCommand readGameCommand() {
+        System.out.println(NEW_LINE + "게임을 다시 시도할지 여부를 입력해주세요. (재시도: R, 종료: Q)");
         String input = Console.readLine();
         return RetryCommand.getCommand(input);
     }

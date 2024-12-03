@@ -1,8 +1,13 @@
 package bridge;
 
+import bridge.config.AppConfig;
+import bridge.controller.BridgeController;
+
 public class Application {
 
     public static void main(String[] args) {
-        // TODO: 프로그램 구현
+        AppConfig appConfig = new AppConfig();
+        BridgeController bridgeController = appConfig.bridgeController();
+        bridgeController.run();
     }
 }

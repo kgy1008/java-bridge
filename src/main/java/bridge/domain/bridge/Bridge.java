@@ -9,4 +9,8 @@ public class Bridge {
     public Bridge(final List<String> bridge) {
         this.bridge = bridge;
     }
+
+    public String getStatus(final int idx) {
+        return bridge.get(idx);
+    }
 }

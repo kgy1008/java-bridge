@@ -1,6 +1,7 @@
 package bridge.domain.bridge;
 
-import java.util.List;
+import bridge.domain.command.RetryCommand;
+import bridge.domain.command.UserCommand;
 
 public class BridgeService {
 
@@ -14,5 +15,15 @@ public class BridgeService {
 
     public Bridge generateBridge(final int size) {
         return new Bridge(bridgeMaker.makeBridge(size));
+    }
+
+    public boolean judgeMove(final Bridge bridge, final int step, final UserCommand userCommand) {
+        String birdgeStatus = bridge.getStatus(step);
+        UserCommand bridgeCommand = UserCommand.getCommand(birdgeStatus);
+        return bridgeGame.move(bridgeCommand, userCommand);
+    }
+
+    public boolean judgeRetry(final RetryCommand retryCommand) {
+        return bridgeGame.retry(retryCommand);
     }
 }
