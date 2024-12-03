@@ -25,14 +25,14 @@ public class BridgeController {
         outputView.printWelcomeMessage();
         int size = inputSize();
         boolean flag = true;
-        int tryCount = 0;
-        int status = 0;
-        startBridgeGame(size, flag, tryCount, status);
+        int tryCount = 1;
+        int status = startBridgeGame(size, flag, tryCount);
         printResult(tryCount, status, size);
     }
 
-    private void startBridgeGame(int size, boolean flag, int tryCount, int status) {
+    private int startBridgeGame(int size, boolean flag, int tryCount) {
         Bridge bridge = bridgeService.generateBridge(size);
+        int status = 0;
         A:
         while (flag) {
             while (status < size) {
@@ -47,7 +47,9 @@ public class BridgeController {
                 }
                 status++;
             }
+            break;
         }
+        return status;
     }
 
     private void printResult(final int tryCount, final int status, final int size) {

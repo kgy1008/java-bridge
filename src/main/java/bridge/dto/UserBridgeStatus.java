@@ -12,7 +12,7 @@ public record UserBridgeStatus(
         List<String> upper = new ArrayList<>();
         List<String> lower = new ArrayList<>();
         for (int i = 0; i <= step; i++) {
-            if (movable) {
+            if (movable || i != step) {
                 if (bridge.getStatus(i).equals("U")) {
                     upper.add("O");
                     lower.add(" ");
@@ -22,11 +22,11 @@ public record UserBridgeStatus(
                 }
             } else {
                 if (bridge.getStatus(i).equals("U")) {
-                    upper.add("X");
-                    lower.add(" ");
-                } else {
                     lower.add("X");
                     upper.add(" ");
+                } else {
+                    upper.add("X");
+                    lower.add(" ");
                 }
             }
         }

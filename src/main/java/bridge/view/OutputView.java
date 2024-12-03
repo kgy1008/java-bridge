@@ -34,10 +34,11 @@ public class OutputView {
     }
 
     public void printResult(final int tryCount, final boolean isSuccess) {
+        System.out.println(NEW_LINE);
         if (isSuccess) {
-            System.out.println("게임 성공 여부: 성공");
+            System.out.println(NEW_LINE + "게임 성공 여부: 성공");
         } else {
-            System.out.println("게임 성공 여부: 실패");
+            System.out.println(NEW_LINE + "게임 성공 여부: 실패");
         }
         System.out.printf("총 시도한 횟수: %d", tryCount);
     }
