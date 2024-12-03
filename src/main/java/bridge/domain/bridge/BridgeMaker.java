@@ -1,6 +1,7 @@
 package bridge.domain.bridge;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class BridgeMaker {
@@ -23,6 +24,6 @@ public class BridgeMaker {
                 bridge.add("D");
             }
         }
-        return bridge;
+        return Collections.unmodifiableList(bridge);
     }
 }
