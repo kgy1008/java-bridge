@@ -11,9 +11,9 @@ import java.util.function.Supplier;
 
 public class BridgeController {
 
-    private InputView inputView;
-    private OutputView outputView;
-    private BridgeService bridgeService;
+    private final InputView inputView;
+    private final OutputView outputView;
+    private final BridgeService bridgeService;
 
     public BridgeController(final InputView inputView, final OutputView outputView, final BridgeService bridgeService) {
         this.inputView = inputView;
@@ -24,58 +24,56 @@ public class BridgeController {
     public void run() {
         outputView.printWelcomeMessage();
         int size = inputSize();
-        boolean flag = true;
         int tryCount = 1;
-        int status = startBridgeGame(size, flag, tryCount);
-        printResult(tryCount, status, size);
-    }
-
-    private int startBridgeGame(int size, boolean flag, int tryCount) {
         Bridge bridge = bridgeService.generateBridge(size);
-        int status = 0;
-        A:
-        while (flag) {
-            while (status < size) {
-                UserCommand userCommand = inputUserCommand();
-                boolean movable = move(bridge, status, userCommand);
-                printBridgeStatus(bridge, status, movable);
-                if (!movable) {
-                    flag = retry();
-                    tryCount++;
-                    status = 0;
-                    continue A;
-                }
-                status++;
+
+        while (true) {
+            boolean gameCompleted = playGame(bridge, size);
+            if (gameCompleted || !askRetry()) {
+                printResult(tryCount, gameCompleted);
+                break;
             }
-            break;
+            tryCount++;
         }
-        return status;
     }
 
-    private void printResult(final int tryCount, final int status, final int size) {
-        boolean isSuccess = status == size;
+    private boolean playGame(final Bridge bridge, final int size) {
+        int currentStep = 0;
+        while (currentStep < size) {
+            UserCommand userCommand = inputUserCommand();
+            boolean movable = move(bridge, currentStep, userCommand);
+            printBridgeStatus(bridge, currentStep, movable);
+            if (!movable) {
+                return false;
+            }
+            currentStep++;
+        }
+        return true;
+    }
+
+    private boolean askRetry() {
+        RetryCommand retryCommand = inputRetryCommand();
+        return bridgeService.judgeRetry(retryCommand);
+    }
+
+    private void printResult(final int tryCount, final boolean isSuccess) {
         outputView.printResult(tryCount, isSuccess);
     }
 
     private int inputSize() {
-        return retryTemplate(() -> inputView.readBridgeSize());
+        return retryTemplate(inputView::readBridgeSize);
     }
 
     private UserCommand inputUserCommand() {
-        return retryTemplate(() -> inputView.readMoving());
+        return retryTemplate(inputView::readMoving);
     }
 
     private boolean move(final Bridge bridge, final int step, final UserCommand userCommand) {
         return bridgeService.judgeMove(bridge, step, userCommand);
     }
 
-    private boolean retry() {
-        RetryCommand retryCommand = inputRetryCommand();
-        return bridgeService.judgeRetry(retryCommand);
-    }
-
     private RetryCommand inputRetryCommand() {
-        return retryTemplate(() -> inputView.readGameCommand());
+        return retryTemplate(inputView::readGameCommand);
     }
 
     private void printBridgeStatus(final Bridge bridge, final int step, final boolean movable) {
