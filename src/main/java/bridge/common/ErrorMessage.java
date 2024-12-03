@@ -7,7 +7,7 @@ public enum ErrorMessage {
     INVALID_RETRY_INPUT("재시도는 R 종료는 Q를 입력해주세요."),
     INVALID_USER_INPUT("U 또는 D를 입력해주세요.");
 
-    private static final String HEADER = "[ERROR ]";
+    private static final String HEADER = "[ERROR] ";
     private final String message;
 
     ErrorMessage(final String message) {
