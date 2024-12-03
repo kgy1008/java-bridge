@@ -1,6 +1,8 @@
 package bridge.view;
 
 import bridge.common.ErrorMessage;
+import bridge.domain.command.RetryCommand;
+import bridge.domain.command.UserCommand;
 import camp.nextstep.edu.missionutils.Console;
 
 /**
@@ -8,23 +10,24 @@ import camp.nextstep.edu.missionutils.Console;
  */
 public class InputView {
 
+    private static final int MIN_SIZE = 3;
+    private static final int MAX_SIZE = 20;
+
     public int readBridgeSize() {
         String input = Console.readLine();
-        return convertToInt(input);
+        int size = convertToInt(input);
+        validateSize(size);
+        return size;
     }
 
-    /**
-     * 사용자가 이동할 칸을 입력받는다.
-     */
-    public String readMoving() {
-        return null;
+    public UserCommand readMoving() {
+        String input = Console.readLine();
+        return UserCommand.getCommand(input);
     }
 
-    /**
-     * 사용자가 게임을 다시 시도할지 종료할지 여부를 입력받는다.
-     */
-    public String readGameCommand() {
-        return null;
+    public RetryCommand readGameCommand() {
+        String input = Console.readLine();
+        return RetryCommand.getCommand(input);
     }
 
     private int convertToInt(final String input) {
@@ -32,6 +35,12 @@ public class InputView {
             return Integer.parseInt(input);
         } catch (NumberFormatException e) {
             throw new IllegalArgumentException(ErrorMessage.INVALID_INPUT_TYPE.getMessage());
+        }
+    }
+
+    private void validateSize(final int size) {
+        if (size < MIN_SIZE || size > MAX_SIZE) {
+            throw new IllegalArgumentException(ErrorMessage.INVALID_INPUT_RANGE.getMessage());
         }
     }
 }
