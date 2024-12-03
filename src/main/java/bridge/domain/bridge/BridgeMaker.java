@@ -13,7 +13,7 @@ public class BridgeMaker {
         this.bridgeNumberGenerator = bridgeNumberGenerator;
     }
 
-    public Bridge makeBridge(int size) {
+    public List<String> makeBridge(int size) {
         List<String> bridge = new ArrayList<>();
         for (int i = 0; i < size; i++) {
             int num = bridgeNumberGenerator.generate();
@@ -23,6 +23,6 @@ public class BridgeMaker {
                 bridge.add("D");
             }
         }
-        return new Bridge(bridge);
+        return bridge;
     }
 }

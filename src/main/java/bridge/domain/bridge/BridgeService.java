@@ -13,6 +13,6 @@ public class BridgeService {
     }
 
     public Bridge generateBridge(final int size) {
-        return bridgeMaker.makeBridge(size);
+        return new Bridge(bridgeMaker.makeBridge(size));
     }
 }
