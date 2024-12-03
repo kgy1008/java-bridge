@@ -21,14 +21,14 @@ public class OutputView {
 
     private void printUpperMap(final UserBridgeStatus userBridgeStatus) {
         System.out.print("[ ");
-        String upperResult = String.join(" | ", userBridgeStatus.upper());
+        String upperResult = String.join(" | ", userBridgeStatus.upperLadder());
         System.out.print(upperResult);
         System.out.print(" ]" + NEW_LINE);
     }
 
     private void printLowerMap(final UserBridgeStatus userBridgeStatus) {
         System.out.print("[ ");
-        String lowerResult = String.join(" | ", userBridgeStatus.lower());
+        String lowerResult = String.join(" | ", userBridgeStatus.lowerLadder());
         System.out.print(lowerResult);
         System.out.print(" ]");
     }

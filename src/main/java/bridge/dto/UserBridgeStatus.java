@@ -6,9 +6,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 public record UserBridgeStatus(
-        List<String> upper,
-        List<String> lower
+        List<String> upperLadder,
+        List<String> lowerLadder
 ) {
+    private static final String UPPER = "U";
+    private static final String LOWER = "O";
+    private static final String EMPTY = " ";
+    private static final String FAIL = "X";
+
     public static UserBridgeStatus from(final Bridge bridge, final int step, final boolean movable) {
         List<String> upper = new ArrayList<>();
         List<String> lower = new ArrayList<>();
@@ -21,26 +26,27 @@ public record UserBridgeStatus(
                 addUnmovableStatus(status, upper, lower);
             }
         }
+
         return new UserBridgeStatus(upper, lower);
     }
 
     private static void addMovableStatus(String status, List<String> upper, List<String> lower) {
-        if (status.equals("U")) {
-            upper.add("O");
-            lower.add(" ");
+        if (status.equals(UPPER)) {
+            upper.add(LOWER);
+            lower.add(EMPTY);
         } else {
-            lower.add("O");
-            upper.add(" ");
+            lower.add(LOWER);
+            upper.add(EMPTY);
         }
     }
 
     private static void addUnmovableStatus(String status, List<String> upper, List<String> lower) {
-        if (status.equals("U")) {
-            upper.add(" ");
-            lower.add("X");
+        if (status.equals(UPPER)) {
+            upper.add(EMPTY);
+            lower.add(FAIL);
         } else {
-            upper.add("X");
-            lower.add(" ");
+            upper.add(FAIL);
+            lower.add(EMPTY);
         }
     }
 }
